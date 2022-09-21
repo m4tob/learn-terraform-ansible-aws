@@ -1,0 +1,8 @@
+---
+  - name: wordpress
+    hosts: all
+    become: yes
+    remote_user: ec2-user
+
+    vars_files:
+      - ./defaults/variables.yml

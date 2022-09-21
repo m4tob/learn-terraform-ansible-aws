@@ -32,6 +32,21 @@ resource "aws_security_group" "sg_web" {
   }
 }
 
+resource "local_file" "tf_ansible_vars" {
+  filename = "../ansible/defaults/variables.yml"
+  content = <<-EOF
+    db_host: "${aws_db_instance.default.address}"
+    db_port: "${aws_db_instance.default.port}"
+    db_name: "${var.db_name}"
+    db_user: "${var.db_user}"
+    db_password: "${var.db_password}"
+  EOF
+
+  depends_on = [
+    aws_db_instance.default
+  ]
+}
+
 resource "aws_instance" "default" {
   ami                         = var.ec2_ami
   instance_type               = var.ec2_instance_type
@@ -44,6 +59,14 @@ resource "aws_instance" "default" {
   tags = {
     Name = "ec2-${var.default_tag}"
   }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ${aws_instance.default.public_ip}, --private-key ${var.ssh_key_path} ../ansible/main.yml"
+  }
+
+  depends_on = [
+    aws_db_instance.default
+  ]
 }
 
 output "public_ip" {
