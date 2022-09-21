@@ -6,3 +6,7 @@
 
     vars_files:
       - ./defaults/variables.yml
+
+    roles:
+      - mysql
+      - wordpress

@@ -41,3 +41,5 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+.infra/ansible/defaults/variables.yml
