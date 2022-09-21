@@ -57,3 +57,12 @@ variable "db_user" {
 variable "db_password" {
   default = "NarTivEldEnTleTO"
 }
+
+# EC2
+variable "ec2_ami" {
+  default = "ami-05fa00d4c63e32376"
+}
+
+variable "ec2_instance_type" {
+  default = "t3.micro"
+}

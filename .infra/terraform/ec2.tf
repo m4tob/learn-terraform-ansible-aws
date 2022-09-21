@@ -1,0 +1,51 @@
+resource "aws_security_group" "sg_web" {
+  name        = "sg_web"
+  description = "Security Group Web"
+  vpc_id      = aws_vpc.default.id
+
+  ingress {
+    description      = "SSH"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "TCP"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  
+  ingress {
+    description      = "HTTP"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "TCP"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "sg-web-${var.default_tag}"
+  }
+}
+
+resource "aws_instance" "default" {
+  ami                         = var.ec2_ami
+  instance_type               = var.ec2_instance_type
+  key_name                    = var.ssh_key_name
+  subnet_id                   = aws_subnet.sn_public_a.id
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.sg_web.id]
+  monitoring                  = true
+
+  tags = {
+    Name = "ec2-${var.default_tag}"
+  }
+}
+
+output "public_ip" {
+  value = aws_instance.default.public_ip
+}
