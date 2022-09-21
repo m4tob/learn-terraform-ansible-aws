@@ -21,6 +21,26 @@
           src: nginx/nginx.conf
           dest: /etc/nginx/nginx.conf
 
+  #php-fpm
+  - name: Install php-fpm
+    command: amazon-linux-extras install php7.4 -y
+
+  - name: Setup php-fpm
+    block:
+      - name: Configure php-fpm to auto-start
+        command: chkconfig php-fpm on
+
+      - name: Update www.conf file
+        copy:
+          src: php-fpm/www.conf
+          dest: /etc/php-fpm.d/www.conf
+
+  # restart
+  - name: Restart php-fpm
+    service:
+      name: php-fpm
+      state: restarted
+
   - name: Restart nginx
     service:
       name: nginx
