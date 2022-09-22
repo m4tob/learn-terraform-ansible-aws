@@ -35,6 +35,41 @@
           src: php-fpm/www.conf
           dest: /etc/php-fpm.d/www.conf
 
+  # wordpress
+  - name: Create www directory
+    file:
+      path: /var/www/html
+      state: directory
+
+  - name: Download wordpress
+    ansible.builtin.unarchive:
+      src: https://br.wordpress.org/latest-pt_BR.tar.gz
+      dest: /var/www/html/
+      remote_src: yes 
+
+  - name: Setup wordpress
+    block:
+      - name: Rename wordpress directory
+        command: mv /var/www/html/wordpress /var/www/html/blog
+
+      - name: Create wp-config file
+        template:
+          src: wp-config.php.j2
+          dest: /var/www/html/blog/wp-config.php
+
+      - name: Create info.php file
+        copy:
+          src: php-fpm/info.php
+          dest: /var/www/html/blog/info.php
+
+      - name: Update wordpress directory permissions
+        ansible.builtin.file:
+          path: /var/www/html/blog
+          owner: nginx
+          group: nginx
+          mode: '0755'
+          recurse: yes
+
   # restart
   - name: Restart php-fpm
     service:
