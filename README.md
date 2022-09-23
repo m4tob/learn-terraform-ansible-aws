@@ -8,23 +8,23 @@ Project to learn about infra as code. In this project, a wordpress blog is provi
 [<img src=".github/aws_logo.png" alt="aws" style="width:150px; margin-right: 20px;"/>](https://aws.amazon.com/)
 
 
-# Recursos Obrigatórios:
+# Mandatory Resources:
 ## Terraform
-- [ ] VPC
-- [ ] Subnet
-- [ ] Route Tables
-- [ ] Internet Gateway
-- [ ] Security Groups
+- [x] VPC
+- [x] Subnet
+- [x] Route Tables
+- [x] Internet Gateway
+- [x] Security Groups
 
-- [ ] RDS
-- [ ] EC2 Instance
+- [x] RDS
+- [x] EC2 Instance
 
 ## Ansible
-- [ ] nginx
-- [ ] php-fpm
-- [ ] WordPress
+- [x] nginx
+- [x] php-fpm
+- [x] WordPress
 
-# Recursos Opcionais:
+# Optional Resources:
 - [ ] Memcache
 - [ ] Load Balancer
 - [ ] Auto Scaling
