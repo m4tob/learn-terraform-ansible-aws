@@ -1,4 +1,4 @@
-# Learn - Terraform + Ansible + AWS
+# Learning: Terraform + Ansible + AWS
 
 Project to learn about infra as code. In this project, a wordpress blog is provisioned on AWS with RDS as database using Terraform and Ansible. This project is a task of SRE Eleven Works course.
 
